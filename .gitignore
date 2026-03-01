@@ -1,0 +1,22 @@
+# 프로젝트 산출물 (리서치 실행 시 생성됨)
+output/*
+!output/.gitkeep
+
+# OS
+.DS_Store
+
+# 환경 변수 / 시크릿
+.env
+*.env
+
+# 로컬 전용
+.claude/settings.local.json
+
+# 사용자별 메모리 (세션 간 지속, 퍼블릭 미포함)
+memory/
+
+# 임시 파일
+*.tmp
+
+# Codex CLI 전용
+AGENTS.md
