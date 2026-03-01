@@ -11,7 +11,7 @@
 ## Quick Start
 
 ### 1. 사전 요건
-- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) 설치 + Anthropic API Key (또는 Claude Max 구독)
+- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) 설치 + Claude 구독 (Pro/Max 모두 지원. Pro는 사용량 한도가 낮으므로 Deep 리서치 시 Max 권장)
 - Node.js 18+, Python 3.8+
 
 ### 2. 설치
@@ -108,15 +108,15 @@ knowledge/
 | Brave Search | MCP Server | ✅ (월 2,000) | https://brave.com/search/api/ | 웹 검색 |
 | Fetch | MCP Server | ✅ (키 불필요) | — | 웹 페이지 가져오기 |
 
-### 선택 (도메인별로 다름)
+### 선택 (공통 + 도메인별)
 
 | 항목 | 무료 | 발급 URL | 용도 |
 |------|------|---------|------|
-| Steam Web API | ✅ | https://steamcommunity.com/dev/apikey | 게임: Steam 데이터 |
-| IGDB | ✅ | https://api-docs.igdb.com/#getting-started | 게임: 게임 DB |
 | FRED API | ✅ | https://fred.stlouisfed.org/docs/api/api_key.html | 미국 경제 지표 |
 | ECOS API | ✅ | https://ecos.bok.or.kr/api/ | 한국 경제 통계 |
 | NewsAPI | ✅ | https://newsapi.org/register | 뉴스 검색 |
+
+> 도메인 특화 API는 `/setup` 실행 시 Step 8.5에서 자동 리서치되어 추가됩니다.
 
 ### 1차 소스 (공시 API — 키 불필요 또는 별도)
 | 지역 | 시스템 | API | 대상 |

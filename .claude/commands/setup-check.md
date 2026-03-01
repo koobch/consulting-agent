@@ -46,12 +46,18 @@ source ~/.research-orchestrator.env 2>/dev/null
 [ -n "$FIRECRAWL_API_KEY" ] && echo "FIRECRAWL_API_KEY=SET" || echo "FIRECRAWL_API_KEY=UNSET"
 [ -n "$BRAVE_API_KEY" ] && echo "BRAVE_API_KEY=SET" || echo "BRAVE_API_KEY=UNSET"
 
-# 선택
-[ -n "$STEAM_API_KEY" ] && echo "STEAM_API_KEY=SET" || echo "STEAM_API_KEY=UNSET"
+# 선택 (공통)
 [ -n "$FRED_API_KEY" ] && echo "FRED_API_KEY=SET" || echo "FRED_API_KEY=UNSET"
 [ -n "$ECOS_API_KEY" ] && echo "ECOS_API_KEY=SET" || echo "ECOS_API_KEY=UNSET"
 [ -n "$NEWSAPI_KEY" ] && echo "NEWSAPI_KEY=SET" || echo "NEWSAPI_KEY=UNSET"
-[ -n "$IGDB_CLIENT_ID" ] && echo "IGDB_CLIENT_ID=SET" || echo "IGDB_CLIENT_ID=UNSET"
+
+# 도메인 특화 API — env 파일에서 동적으로 탐색
+grep -oP 'export\s+\K[A-Z_]+(?=_API_KEY|_CLIENT_ID)' ~/.research-orchestrator.env 2>/dev/null | while read prefix; do
+  var="${prefix}_API_KEY"
+  [ -z "$(eval echo \$$var)" ] && var="${prefix}_CLIENT_ID"
+  val="$(eval echo \$$var)"
+  [ -n "$val" ] && echo "DOMAIN:${var}=SET" || echo "DOMAIN:${var}=UNSET"
+done
 ```
 
 ### 6. MCP 서버 확인
@@ -111,8 +117,7 @@ except:
 | 선택 API | FRED | ✅ / — 미설정 | 미국 경제 지표 |
 | 선택 API | ECOS | ✅ / — 미설정 | 한국 경제 통계 |
 | 선택 API | NewsAPI | ✅ / — 미설정 | 뉴스 검색 |
-| 도메인 API | Steam | ✅ / — 미설정 | 게임 도메인 |
-| 도메인 API | IGDB | ✅ / — 미설정 | 게임 도메인 |
+| 도메인 API | (Step 8.5에서 추가됨) | ✅ / — 미설정 | 도메인별 상이 |
 ```
 
 **미설정 항목이 있으면** 하단에 안내:
