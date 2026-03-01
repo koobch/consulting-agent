@@ -17,7 +17,7 @@ const CONFIG = {
 
   // 생성될 문서 설정
   OUTPUT_FOLDER_ID: '', // 빈 값이면 My Drive 루트에 생성
-  DOC_TITLE: '넷마블네오 신작 전략 수립 보고서',
+  DOC_TITLE: '리서치 보고서',
 
   // 스타일 설정
   STYLES: {

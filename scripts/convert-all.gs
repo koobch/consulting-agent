@@ -1,5 +1,5 @@
 /**
- * 넷마블네오 보고서 변환 올인원 스크립트
+ * 리서치 보고서 변환 올인원 스크립트
  *
  * === 사용법 ===
  * 1. Google Drive에 report-docs.md, report-slides.md 파일을 업로드
@@ -40,7 +40,7 @@ const THEME = {
  * ★ 메인 실행 함수 — Docs + Slides 모두 생성
  */
 function runAll() {
-  Logger.log('=== 넷마블네오 보고서 변환 시작 ===\n');
+  Logger.log('=== 리서치 보고서 변환 시작 ===\n');
 
   if (!DRIVE_FILE_IDS.docs && !DRIVE_FILE_IDS.slides) {
     Logger.log('⚠️ DRIVE_FILE_IDS에 파일 ID를 입력해주세요.');
@@ -81,7 +81,7 @@ function runSlidesOnly() {
 // ============================================================
 function createGoogleDoc_() {
   const markdown = DriveApp.getFileById(DRIVE_FILE_IDS.docs).getBlob().getDataAsString('UTF-8');
-  const doc = DocumentApp.create('넷마블네오 신작 전략 수립 보고서');
+  const doc = DocumentApp.create('리서치 보고서');
   const body = doc.getBody();
 
   body.setMarginTop(60);
@@ -207,7 +207,7 @@ function createGoogleDoc_() {
 // ============================================================
 function createGoogleSlides_() {
   const markdown = DriveApp.getFileById(DRIVE_FILE_IDS.slides).getBlob().getDataAsString('UTF-8');
-  const presentation = SlidesApp.create('넷마블네오 신작 전략 수립');
+  const presentation = SlidesApp.create('리서치 보고서');
 
   // 기본 슬라이드 삭제
   const defaultSlide = presentation.getSlides()[0];
@@ -265,13 +265,13 @@ function buildSlide_(pres, section, idx) {
     // 표지
     slide.getBackground().setSolidFill(THEME.PRIMARY);
 
-    var tb1 = slide.insertTextBox('넷마블네오 신작 전략 수립', 60, H/2 - 60, W - 120, 50);
+    var tb1 = slide.insertTextBox('리서치 보고서', 60, H/2 - 60, W - 120, 50);
     tb1.getText().getTextStyle().setFontSize(32).setBold(true).setForegroundColor(THEME.TEXT_LIGHT);
 
-    var tb2 = slide.insertTextBox('포트폴리오 진단 → 시장/경쟁 분석 → 전략 방향 도출', 60, H/2, W - 120, 30);
+    var tb2 = slide.insertTextBox('팩트시트 → 가설 수립 → 데이터 수집 → 인사이트 도출', 60, H/2, W - 120, 30);
     tb2.getText().getTextStyle().setFontSize(14).setForegroundColor(THEME.HIGHLIGHT);
 
-    var tb3 = slide.insertTextBox('2026년 2월 | 전략기획팀', 60, H/2 + 40, W - 120, 25);
+    var tb3 = slide.insertTextBox('Research Orchestrator', 60, H/2 + 40, W - 120, 25);
     tb3.getText().getTextStyle().setFontSize(11).setForegroundColor(THEME.TEXT_GRAY);
   } else {
     // 일반 슬라이드

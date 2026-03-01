@@ -11,7 +11,7 @@
 // ========== 설정 ==========
 const SLIDE_CONFIG = {
   OUTPUT_FOLDER_ID: '', // 빈 값이면 My Drive 루트에 생성
-  PRESENTATION_TITLE: '넷마블네오 신작 전략 수립',
+  PRESENTATION_TITLE: '리서치 보고서',
 
   // 색상 테마
   THEME: {
@@ -168,7 +168,7 @@ function createTitleSlide_(slide, section, theme, pageWidth, pageHeight) {
     .setForegroundColor(theme.TEXT_LIGHT);
 
   // 서브타이틀
-  const subtitleText = '포트폴리오 진단 → 시장/경쟁 분석 → 전략 방향 도출';
+  const subtitleText = '팩트시트 → 가설 수립 → 데이터 수집 → 인사이트 도출';
   const subtitleBox = slide.insertTextBox(
     subtitleText,
     60, pageHeight / 2 + 10, pageWidth - 120, 30
@@ -179,7 +179,7 @@ function createTitleSlide_(slide, section, theme, pageWidth, pageHeight) {
 
   // 날짜/팀
   const infoBox = slide.insertTextBox(
-    '2026년 2월 | 전략기획팀',
+    'Research Orchestrator',
     60, pageHeight / 2 + 50, pageWidth - 120, 25
   );
   infoBox.getText().getTextStyle()
