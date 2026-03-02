@@ -2,7 +2,7 @@
 
 ## 프로젝트 개요
 컨설팅급 리서치 오케스트레이션 시스템.
-주제가 주어지면 가설 수립 → 프레임워크 설계 → 데이터 수집 → 팩트체크 → 인사이트 도출 → 보고서 작성까지 전 과정을 에이전트 기반으로 수행한다.
+주제가 주어지면 가설 수립 → 프레임워크 설계 → 데이터 수집 → 팩트체크 → 인사이트 도출 → **사고 루프(Thinking Loop: Why 수직 검증 + 대안/레드팀 수평 도전)** → 보고서 작성까지 전 과정을 에이전트 기반으로 수행한다.
 
 **도메인 독립적 설계**: `knowledge/domain/` 디렉토리에 도메인 프로파일을 배치하면 게임, 바이오, SaaS, 반도체 등 어떤 산업이든 동일한 파이프라인으로 리서치 가능. 도메인 프로파일 스키마는 `knowledge/domain-profile-schema.md` 참조.
 
@@ -11,15 +11,45 @@
 ### 오케스트레이션 구조
 ```
 [사용자] → [research-pm] (오케스트레이터)
-                ├── [hypothesis-builder]     가설 수립
-                ├── [framework-designer]     프레임워크/MECE 분해
-                ├── [data-researcher]        데이터 수집 (병렬 가능)
-                ├── [fact-checker]           팩트체크/출처 검증
-                ├── [insight-synthesizer]    인사이트 도출
-                ├── [report-writer]          보고서 생성 (Docs/Slides)
-                ├── [financial-analyst]      재무 분석 (필요 시)
-                └── [valuation-analyst]      밸류에이션 (필요 시)
+                │
+                ├── [hypothesis-builder]      가설 수립
+                ├── [framework-designer]      프레임워크 설계 (First-Principles)
+                ├── [data-researcher]         데이터 수집 (병렬 가능)
+                ├── [fact-checker]            팩트체크/출처 검증
+                ├── [insight-synthesizer]     인사이트 도출
+                ├── [financial-analyst]       재무 분석 (필요 시)
+                ├── [valuation-analyst]       밸류에이션 (필요 시)
+                │
+                ├── 사고 루프 (Thinking Loop) ─────────────────┐
+                │   ├── [logic-prober]        수직: Why Chain   │
+                │   ├── [strategic-challenger] 수평: 대안/레드팀 │
+                │   └── [insight-synthesizer]  반영/보강        │
+                │                          (수렴까지 최대 2회) ─┘
+                │
+                ├── [report-writer]           보고서 생성 (Docs/Slides)
+                └── 품질 보증 ──────────────────────────────────┐
+                    ├── [report-auditor]      읽기 전용 감사     │
+                    ├── [report-fixer]        최소 수정          │
+                    └── [qa-orchestrator]     자동 QA 루프       │
+                                           (수렴까지 반복) ────┘
 ```
+
+### 에이전트 역할 요약
+
+| 분류 | 에이전트 | 핵심 역할 |
+|------|---------|----------|
+| **사고** | logic-prober | 수직 검증 — "왜 이 결론인가?" 재귀적 Why Chain |
+| **사고** | strategic-challenger | 수평 도전 — "다른 방법은?", "실패하면?", "경쟁사 대응은?" |
+| **사고** | insight-synthesizer | 패턴 인식, So What 도출, 역량 검증, 사고 루프 결과 통합 |
+| **설계** | hypothesis-builder | 가설 수립, 가설-데이터 매핑표 |
+| **설계** | framework-designer | First-Principles 기반 프레임워크 설계 |
+| **수집/검증** | data-researcher | 데이터 수집 (Ground Truth, 가설 기반) |
+| **수집/검증** | fact-checker | 팩트체크, 출처 검증, 실시간 + 종합 검증 |
+| **분석** | financial-analyst | 재무 분석, Peer 비교, 투자 시나리오 |
+| **분석** | valuation-analyst | DCF, 멀티플, SOTP 밸류에이션 |
+| **보고서** | report-writer | 보고서 생성 (Docs + Slides) |
+| **품질** | report-auditor, report-fixer, qa-orchestrator | 자동 QA 루프 |
+| **관리** | research-pm | 전체 오케스트레이션, 품질 게이트, 에스컬레이션 |
 
 ### 워크플로우 시퀀스
 
@@ -60,9 +90,15 @@
 15. `financial-analyst` 투입 조건: 매출/수익성 전망이 핵심이거나 Peer 비교/투자 분석 필요 시
 16. `valuation-analyst` 투입 조건: 기업가치 추정, M&A 대상 평가, IPO/자금조달 분석 필요 시
 
+#### Phase 4.5: 사고 루프 (Thinking Loop) — 인사이트·전략 심화
+17. `logic-prober`가 핵심 인사이트/전략에 재귀적 Why Chain (수직 검증)
+18. `strategic-challenger`가 대안 전략 생성 + 실패 시뮬레이션 + 경쟁자 대응 + 비대칭 사고 (수평 도전)
+19. `insight-synthesizer`가 도전 결과를 반영하여 인사이트 보강
+20. PM이 수렴 판정 — 미수렴 시 루프 반복 (최대 2회)
+
 #### Phase 5: 보고서 생성
-17. `report-writer`가 스토리라인 구성 → 보고서 작성
-18. 최종 산출물: Google Docs(상세 보고서) + Google Slides(경영진 보고용)
+21. `report-writer`가 스토리라인 구성 → 보고서 작성 (사고 루프 결과 포함)
+22. 최종 산출물: Google Docs(상세 보고서) + Google Slides(경영진 보고용)
 
 ### 에이전트 간 데이터 전달 규칙
 - 모든 에이전트 출력은 `output/` 폴더에 마크다운으로 저장
@@ -218,13 +254,15 @@ knowledge/
 
 | 단계 | 주 에이전트 | 디스커션 상대 | 검증 내용 |
 |------|-----------|-------------|----------|
-| Step 1 가설 | hypothesis-builder | fact-checker | 가설 전제가 팩트시트와 일치하는지, 절대적 표현 검증 |
+| Step 1 가설 | hypothesis-builder | fact-checker → logic-prober | 가설 전제가 팩트시트와 일치하는지, 절대적 표현 검증 → Why Chain으로 가설 논리 근본 건전성 검증 |
 | Step 2 프레임워크 | framework-designer | data-researcher | 각 분석 항목의 데이터 수집 가능성 사전 검증 |
 | Step 3 데이터 | data-researcher | insight-synthesizer + financial-analyst | 데이터 충분성, 가설 매핑, 비교 가능성 |
 | Step 4 종합 팩트체크 | fact-checker | data-researcher | 검증 실패 항목의 재수집 지시, 엔터티 혼동 확인 |
-| Step 5 인사이트 | insight-synthesizer | fact-checker + financial-analyst | 논리 체인, 인과관계 vs 상관관계, 출처 매핑, 반론 강화, 재무 전망 정합성, **전략 목표 카테고리별 시장 데이터 존재 확인(EP-022)** |
-| Step 6 보고서 | report-writer | fact-checker + insight-synthesizer | 수치 정합성, 출처 완전성, 논리 완결성, 서술-테이블 수치 일치(EP-017), 정정 전파 확인(EP-018) |
-| Step 7 보고서 품질 게이트 | fact-checker | report-writer | **2단계 자동 검증**: (1) `mechanical-validator.py` → error 0건 확인, (2) `source-traceability-checker.py` → unverified 0건 확인. 팩트시트-보고서 정합성 (EP-023) |
+| Step 5 인사이트 | insight-synthesizer | fact-checker + financial-analyst | 논리 체인, 인과관계 vs 상관관계, 출처 매핑, 재무 전망 정합성, 전략 목표 카테고리별 시장 데이터 존재 확인(EP-022) |
+| **Step 5.5 사고 루프** | **PM (오케스트레이션)** | **logic-prober → strategic-challenger → insight-synthesizer** | **수직(Why Chain) + 수평(대안/레드팀/경쟁자/비대칭) 도전 → insight-synthesizer 반영 → 수렴 판정 (최대 2회)** |
+| Step 6 보고서 | report-writer | fact-checker + insight-synthesizer → logic-prober | 수치 정합성, 출처 완전성, 논리 완결성, EP-017/018 → 보고서 표현 과정의 논리 왜곡 여부 최종 확인 |
+| Step 6.5 보고서 자동 QA | qa-orchestrator | report-auditor + report-fixer | `mechanical-validator.py` 기계 검증 + `report-auditor` 시맨틱 감사 → `report-fixer` 수정 → 2회 연속 clean pass까지 반복 |
+| Step 7 최종 검토 | research-pm | [자가 검증] | 핵심 질문 답변 완결성, 논리 완결성, 팩트시트-보고서 정합성, `source-traceability-checker.py` unverified 0건 확인 (EP-023) |
 
 - 디스커션 결과 이슈 발견 시 → 해당 에이전트가 수정 후 재확인
 - 디스커션은 품질 게이트와 별도로, **항상 실행** (Quick 모드 포함)
@@ -245,6 +283,12 @@ knowledge/
 | Yahoo Finance 우선순위 | API → WebFetch → 대안 소스 |
 | DART 쿼터 | 일일 10,000건 — data-researcher 60%, financial-analyst 30%, fact-checker 10% |
 | knowledge/ 참조 | 모든 에이전트가 해당 knowledge 파일 + self-improvement-log.md + domain-profile을 작업 시작 전 읽음 |
+| logic-prober 역할 경계 | 질문(검사)만 수행, 판정(판사)은 전문 에이전트에게 위임 (사실→fact-checker, 재무→financial-analyst, 전략→insight-synthesizer) |
+| strategic-challenger 역할 경계 | 도전과 대안 제시만 수행, 최종 전략 선택은 insight-synthesizer + 사용자에게 위임. 건설적 도전 원칙 — 대안 없는 비판 금지 |
+| 사고 루프 (Thinking Loop) | logic-prober(수직) → strategic-challenger(수평) → insight-synthesizer(반영) 순서 고정. 최대 2회 반복. 수렴 조건: 논리 단절 0건 + Critical 블라인드 스팟 0건 + BASE 시나리오 자력 실현 가능 |
+| 시나리오 역할 분담 | insight-synthesizer: 핵심 불확실성 식별 + 초기 방향. strategic-challenger: 시나리오 구조화(BASE/UPSIDE/DOWNSIDE) + 실패 경로 시뮬레이션. EP-024/025 준수 |
+| 사고 루프 출력 | `{project}/05.5-thinking-loop/` (why-probe-insights.md, strategic-challenge.md, loop-convergence.md) |
+| Why Probe 출력 (기타) | `{project}/01.5-why-probe-hypotheses.md`, `06.5-why-probe-strategy.md` |
 
 ## Claude Code 세션 권한 — 전체 자율 실행
 

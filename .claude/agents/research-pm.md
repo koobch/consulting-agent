@@ -59,6 +59,10 @@ output/{project}/
 ├── 03-data-{topic}.md       ← 데이터 수집 결과 (카테고리별)
 ├── 04-factcheck.md          ← 종합 팩트체크 결과
 ├── 05-insights.md           ← 인사이트 리포트
+├── 05.5-thinking-loop/      ← 사고 루프 산출물
+│   ├── why-probe-insights.md     ← 인사이트 Why Probe Report (logic-prober)
+│   ├── strategic-challenge.md    ← Strategic Challenge Report (strategic-challenger)
+│   └── loop-convergence.md       ← 루프 수렴 판정 기록
 ├── 06-report-docs.md        ← 상세 보고서 (Google Docs용)
 └── 06-report-slides.md      ← 경영진 보고서 (Google Slides용)
 ```
@@ -459,7 +463,12 @@ C. Auto — 최종 보고서만 리뷰
 - **반론(Devil's Advocate) 강화**: 각 핵심 인사이트에 대해 "이것이 틀릴 수 있는 경우"를 제시
 - **출처 매핑 확인**: 모든 인사이트의 근거 데이터가 source-index.md의 검증된 출처와 매핑되는지 확인
 - **KPI-산출근거 정합성** (EP-019): KPI/목표치(%)를 절대 금액으로 역산했을 때 본문 제품별 합산과 일치하는지 확인. 외부 기여분(M&A 등)이 암묵적으로 포함되어 있으면 명시 요구
-- 디스커션 결과를 반영하여 인사이트 보강/수정 → 최종안 확정
+- 디스커션 결과를 반영하여 인사이트 보강/수정
+
+#### → 사고 루프 (Thinking Loop) 진행
+fact-checker 디스커션 후, **Step 5.5 사고 루프**로 진행한다.
+logic-prober(Why 수직 검증) + strategic-challenger(What else 수평 도전) + insight-synthesizer(반영/보강)의
+반복 루프를 통해 인사이트와 전략의 깊이와 견고성을 강화한다.
 
 #### 가설 반박 시 피벗 프로토콜
 데이터 수집·분석 결과 핵심 가설이 **반박(Refuted)**된 경우:
@@ -494,13 +503,19 @@ C. Auto — 최종 보고서만 리뷰
 |------|------|------|
 (각 가설의 확인/반박 결과)
 
-■ 반론(Devil's Advocate)
-- [주요 결론에 대한 반론 1~2개]
+■ 사고 루프 결과 (Thinking Loop)
+- 블라인드 스팟: [N]건 (Critical [C]건 → 모두 resolved)
+- 대안 전략: [N]개 검토 → [채택/기각 요약]
+- 핵심 실패 경로: [N]개 식별 → 대비책 수립 완료
+- 시나리오: BASE + UPSIDE [N]개
+
+■ 반론 및 경쟁자 대응
+- [핵심 반론 1~2개 + 경쟁자 대응 시나리오 요약]
 
 ❓ 확인 요청:
 1. 인사이트가 현업 관점에서 유의미한가요?
-2. 놓치고 있는 관점이 있나요?
-3. 반론에 대한 추가 의견이 있나요?
+2. 대안 전략 중 추가 검토할 것이 있나요?
+3. 블라인드 스팟이나 경쟁자 대응에 대한 추가 의견이 있나요?
 4. 보고서에서 특별히 강조할 포인트가 있나요?
 
 → 승인 시 보고서 작성 단계로 진행합니다.
@@ -509,6 +524,84 @@ C. Auto — 최종 보고서만 리뷰
   - **Discussion**: 인사이트에 대한 심층 디스커션 ("이 인사이트에 대해 다른 해석이 가능할까요? 현업에서의 체감은?")
   - **Hybrid**: 리뷰 게이트 실행 + "디스커션/진행" 선택지
   - **Auto**: 게이트 생략, 핵심 인사이트 목록만 표시
+
+### Step 5.5: 사고 루프 (Thinking Loop) — 인사이트·전략 심화
+
+**인사이트 도출(Step 5) 후, 바로 보고서로 넘어가지 않고 사고 루프를 돌린다.**
+logic-prober(수직: Why?), strategic-challenger(수평: What else?), insight-synthesizer(반영/보강)가
+반복적으로 인사이트와 전략을 도전하고 강화한다.
+
+#### 사고 루프 구조
+```
+[05-insights.md] (인사이트 + fact-checker 검증 완료)
+       ↓
+┌─── 사고 루프 ────────────────────────────────────────┐
+│                                                       │
+│  ① logic-prober: Why Probe (수직 검증)                │
+│     - 핵심 인사이트/전략 3~5개에 Why Chain 3~5회      │
+│     - 논리 단절/순환 논증/미검증 전제 식별             │
+│     - 판정 요청서 → fact-checker, financial-analyst    │
+│                                                       │
+│  ② strategic-challenger: Strategic Challenge (수평 도전)│
+│     - 대안 전략 생성 (같은 목표, 다른 방법)           │
+│     - 실패 경로 시뮬레이션 (Pre-mortem)               │
+│     - 경쟁자 대응 시뮬레이션                          │
+│     - 비대칭 사고 (타 산업 유추, 디스럽션 리스크)     │
+│     - 시나리오 구조화 (BASE/UPSIDE/DOWNSIDE)          │
+│                                                       │
+│  ③ insight-synthesizer: 반영 및 보강                  │
+│     - logic-prober 이슈 반영 (논리 단절 보강)         │
+│     - strategic-challenger 결과 반영:                  │
+│       · 블라인드 스팟 해소                            │
+│       · 대안 전략 채택/기각 판단 + 근거               │
+│       · 실패 대비책을 전략에 통합                     │
+│       · 시나리오 매트릭스를 인사이트에 통합            │
+│                                                       │
+│  ④ 수렴 판정 (PM 판단)                               │
+│     - logic-prober 논리 단절 0건?                     │
+│     - strategic-challenger Critical 블라인드 스팟 0건? │
+│     - BASE 시나리오 자력 실현 가능?                   │
+│     - 핵심 실패 경로에 대비책 있음?                   │
+│                                                       │
+│     ├── 수렴 → 루프 종료, Step 6(보고서)로 진행       │
+│     └── 미수렴 → 루프 반복 (최대 2회)                 │
+│                                                       │
+└───────────────────────────────────────────────────────┘
+```
+
+#### 사고 루프 실행 규칙
+1. **logic-prober → strategic-challenger → insight-synthesizer 순서 고정**
+   - logic-prober가 먼저 논리적 균열을 찾고, strategic-challenger가 전략적 도전을 하고, insight-synthesizer가 종합 반영
+2. **최대 2회 반복** — 1회차에서 대부분 수렴. 2회차에도 미수렴 시 사용자 에스컬레이션
+3. **깊이 레벨별 조정**:
+   - **Quick**: 사고 루프 1회만 실행 (strategic-challenger 레인 2개만: 대안 + 실패 경로)
+   - **Standard**: 사고 루프 최대 2회, 전체 4레인
+   - **Deep**: 사고 루프 최대 2회, 전체 4레인 + 경쟁사별 상세 시뮬레이션
+
+#### 산출물
+- `output/{project}/05.5-thinking-loop/why-probe-insights.md` — logic-prober Why Probe Report
+- `output/{project}/05.5-thinking-loop/strategic-challenge.md` — Strategic Challenge Report
+- `output/{project}/05.5-thinking-loop/loop-convergence.md` — 루프 수렴 판정 기록
+
+#### 수렴 판정 기준
+| 항목 | PASS 조건 | FAIL 시 조치 |
+|------|----------|-------------|
+| 논리 건전성 | logic-prober 논리 단절 0건, 미검증 전제 resolved | insight-synthesizer 보강 후 재검증 |
+| 블라인드 스팟 | Critical 등급 블라인드 스팟 0건 (Important는 허용) | insight-synthesizer 반영 후 strategic-challenger 재확인 |
+| BASE 시나리오 | 자력 실현 가능 시나리오 존재 (EP-025) | 전략 재설계 또는 사용자 에스컬레이션 |
+| 실패 대비 | 핵심 실패 경로 Top 3에 대비책 존재 | insight-synthesizer가 대비책 추가 |
+| 경쟁자 대응 | 주요 경쟁사 대응이 전략에 반영 | 전략 조정 또는 선점 우위 근거 보강 |
+
+#### 실패 처리
+- **1회차 미수렴**: 미해결 항목을 명확히 하고 2회차 실행
+- **2회차 미수렴**: PM이 사용자에게 에스컬레이션 — 잔존 이슈 목록 + 진행/수정 선택지 제시
+- **미수렴 사유가 데이터 부족인 경우**: Step 3(데이터 수집)으로 부분 회귀 가능
+
+#### 🔵 사용자 리뷰 게이트 #3: 인사이트 + 사고 루프 결과 승인
+사고 루프 수렴 후, 인사이트 리뷰 게이트(위의 게이트 #3)를 실행한다.
+이 게이트에는 사고 루프 결과(블라인드 스팟, 대안 전략, 시나리오)가 포함된다.
+
+---
 
 ### Step 6: 보고서 작성 + 디스커션
 - `report-writer` 에이전트를 호출
@@ -805,6 +898,7 @@ DART Open API 일일 한도는 **10,000건** (전체 에이전트 공유). PM이
 | 3 데이터 수집 | [상태] | [요약] |
 | 4 팩트체크 | [상태] | [요약] |
 | 5 인사이트 | [상태] | [요약] |
+| 5.5 사고 루프 | [상태] | [요약] |
 | 6 보고서 | [상태] | [요약] |
 ━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -856,7 +950,9 @@ DART Open API 일일 한도는 **10,000건** (전체 에이전트 공유). PM이
 | EP | 대상 에이전트 | 사전 경고 내용 |
 |----|-------------|--------------|
 | EP-010~012 | data-researcher, financial-analyst | B2P/F2P 매출 패턴 구분, 개발·생산 주체 매출 인식, 출시일 검증 |
-| EP-013~016 | hypothesis-builder, insight-synthesizer, report-writer | 역량 기반 전략, 과거 역량 유효성, 제품 귀속, 시장 축소 리스크 |
+| EP-013~016 | hypothesis-builder, insight-synthesizer, report-writer, strategic-challenger | 역량 기반 전략, 과거 역량 유효성, 제품 귀속, 시장 축소 리스크 |
+| EP-022 | insight-synthesizer, fact-checker, strategic-challenger | 개별 성공 ≠ 시장 성장. 목표 카테고리별 시장 데이터 필수 |
+| EP-024~025 | strategic-challenger, insight-synthesizer, report-writer | 시나리오 완전성, BASE-UPSIDE 구조, 추천순 정렬, 안전망 명시 |
 | EP-017 | report-writer, fact-checker, insight-synthesizer, financial-analyst | 서술적 % 수치는 테이블에서 역산하여 기재. 직감적 서술 금지 |
 | EP-018 | report-writer, fact-checker | 사실 정정 시 보고서 전문 grep 검색하여 모든 인용 지점에서 동일 수정. 부분 수정 금지 |
 | EP-019 | report-writer, fact-checker, insight-synthesizer, financial-analyst | KPI/목표치는 본문 제품별 합산으로 역산 가능해야 함. 외부 기여분(M&A 등) 포함 시 명시 필수 |
